@@ -20,7 +20,7 @@ class ProductController extends Controller
         return redirect('/product');
     }
 
-    public function getProduct($id)
+    public function getProduct(?string $id='123')
     {
         $product = Product::find($id);
         return view('product.detail', ['product' => $product]);

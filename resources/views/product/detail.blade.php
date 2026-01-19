@@ -172,30 +172,38 @@
         }
     </style>
 
-    <div class="product-detail-container">
-        <a href="/product" class="back-link">Back to Product List</a>
-        
-        <div class="product-detail-card">
-            <div class="product-image-section">
-                <div class="product-image-placeholder">
-                    <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
-                </div>
-            </div>
+    @if($product)
+        <div class="product-detail-container">
+            <a href="/product" class="back-link">Back to Product List</a>
 
-            <div class="product-info-section">
-                <h1 class="product-title">{{ $product->name }}</h1>
-                
-                <div class="product-price">{{ $product->price }}</div>
-
-                <div class="info-section">
-                    <div class="info-label">Description</div>
-                    <div class="info-content">{{ $product->description }}</div>
+            <div class="product-detail-card">
+                <div class="product-image-section">
+                    <div class="product-image-placeholder">
+                        <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                    </div>
                 </div>
-                <div class="info-section">
-                    <div class="info-label">Category</div>
-                    <div class="category-badge">Category ID: {{ $product->category_id }}</div>
+
+                <div class="product-info-section">
+                    <h1 class="product-title">{{ $product->name }}</h1>
+
+                    <div class="product-price">{{ $product->price }}</div>
+
+                    <div class="info-section">
+                        <div class="info-label">Description</div>
+                        <div class="info-content">{{ $product->description }}</div>
+                    </div>
+                    <div class="info-section">
+                        <div class="info-label">Category</div>
+                        <div class="category-badge">Category ID: {{ $product->category_id }}</div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @else
+        <div class="product-detail-container">
+            <h1 class="text-2xl font-bold text-slate-800 text-center">Product not found</h1>
+            <p class="text-slate-600 text-center">The product you are looking for does not exist.</p>
+            <a href="{{ route('product.list') }}" class="text-blue-500 text-center">Back to Product List</a>
+        </div>
+    @endif
 </x-layout>

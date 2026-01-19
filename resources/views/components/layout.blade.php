@@ -19,13 +19,9 @@
                         MyApp
                     </a>
                     <div class="hidden md:flex space-x-6">
-                        <a href="/"
+                        <a href="{{ route('home') }}"
                             class="nav-link text-slate-600 hover:text-blue-600 transition-colors duration-150 font-medium">
                             Home
-                        </a>
-                        <a href="/user-list"
-                            class="nav-link text-slate-600 hover:text-blue-600 transition-colors duration-150 font-medium">
-                            User List
                         </a>
                         <a href="/product"
                             class="nav-link text-slate-600 hover:text-blue-600 transition-colors duration-150 font-medium">
@@ -34,7 +30,11 @@
                     </div>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <button onclick="window.location.href='/login'"
+                    <button onclick="window.location.href='{{ route('thongtinsinhvien') }}'"
+                        class="px-4 py-2 text-sm font-medium text-slate-700 hover:text-blue-600 transition-colors duration-150">
+                        Thông tin sinh viên
+                    </button>
+                    <button
                         class="px-4 py-2 text-sm font-medium text-slate-700 hover:text-blue-600 transition-colors duration-150">
                         Sign In
                     </button>
