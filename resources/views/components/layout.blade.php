@@ -23,7 +23,7 @@
                             class="nav-link text-slate-600 hover:text-blue-600 transition-colors duration-150 font-medium">
                             Home
                         </a>
-                        <a href="/product"
+                        <a href="{{ route('product.list') }}"
                             class="nav-link text-slate-600 hover:text-blue-600 transition-colors duration-150 font-medium">
                             Product List
                         </a>
@@ -34,10 +34,36 @@
                         class="px-4 py-2 text-sm font-medium text-slate-700 hover:text-blue-600 transition-colors duration-150">
                         Thông tin sinh viên
                     </button>
-                    <button
-                        class="px-4 py-2 text-sm font-medium text-slate-700 hover:text-blue-600 transition-colors duration-150">
-                        Sign In
-                    </button>
+                    @if(!$loggedInUser)
+                        <a href="{{ route('auth.login') }}"
+                            class="px-4 py-2 text-sm font-medium text-slate-700 hover:text-blue-600 transition-colors duration-150">
+                            Sign In
+                        </a>
+                    @else
+                        <!-- User Profile Section -->
+                        <div
+                            class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-slate-50 transition-colors duration-150 cursor-pointer">
+                            <!-- Avatar Circle -->
+                            <div
+                                class="w-10 h-10 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-white font-semibold shadow-md">
+                                {{ strtoupper(substr($loggedInUser->email, 0, 1)) }}
+                            </div>
+                            <!-- Email -->
+                            <div class="flex flex-col">
+                                <span
+                                    class="text-sm font-semibold text-slate-900">{{ $loggedInUser->name ?? 'User' }}</span>
+                                <span class="text-xs text-slate-500">{{ $loggedInUser->email }}</span>
+                            </div>
+                            <div class="flex flex-col">
+                                <form action="{{ route('auth.logout') }}" method="POST">
+                                    @csrf
+                                    <button type="submit"
+                                        class="text-sm text-slate-500 hover:text-blue-600 transition-colors duration-150">Sign
+                                        out</button>
+                                </form>
+                            </div>
+                        </div>
+                    @endif
                     <button
                         class="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg hover:from-blue-700 hover:to-purple-700 shadow-md hover:shadow-lg transition-shadow duration-150">
                         Get Started
