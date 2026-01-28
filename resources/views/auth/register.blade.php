@@ -56,7 +56,6 @@
                                         d="M6 18L18 6M6 6l12 12"></path>
                                 </svg>
                                 <div>
-                                    <p class="text-sm font-semibold text-red-800 mb-1">Please fix the following errors:</p>
                                     <ul class="text-sm text-red-700 list-disc list-inside">
                                         @foreach($errors->all() as $error)
                                             <li>{{ $error }}</li>
@@ -147,6 +146,73 @@
                                 <input type="password" id="password_confirmation" name="password_confirmation" required
                                     class="w-full pl-10 pr-4 py-3 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-150 outline-none"
                                     placeholder="Confirm your password">
+                            </div>
+                        </div>
+
+                        <!-- MSSV Field -->
+                        <div>
+                            <label for="mssv" class="block text-sm font-semibold text-slate-700 mb-2">
+                                MSSV (Student ID)
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg class="h-5 w-5 text-slate-400" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <input type="text" id="mssv" name="mssv" value="{{ old('mssv') }}"
+                                    class="w-full pl-10 pr-4 py-3 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-150 outline-none"
+                                    placeholder="Enter your student ID">
+                            </div>
+                        </div>
+
+                        <!-- Lop Mon Hoc Field -->
+                        <div>
+                            <label for="lopmonhoc" class="block text-sm font-semibold text-slate-700 mb-2">
+                                Lớp Môn Học (Class)
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg class="h-5 w-5 text-slate-400" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <input type="text" id="lopmonhoc" name="lopmonhoc" value="{{ old('lopmonhoc') }}"
+                                    class="w-full pl-10 pr-4 py-3 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-150 outline-none"
+                                    placeholder="Enter your class">
+                            </div>
+                        </div>
+
+                        <!-- Gioi Tinh Field -->
+                        <div>
+                            <label for="gioitinh" class="block text-sm font-semibold text-slate-700 mb-2">
+                                Giới Tính (Gender)
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg class="h-5 w-5 text-slate-400" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <select id="gioitinh" name="gioitinh"
+                                    class="w-full pl-10 pr-4 py-3 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-150 outline-none">
+                                    <option value="">Select gender</option>
+                                    <option value="Nam" {{ old('gioitinh') == 'Nam' ? 'selected' : '' }}>Nam (Male)
+                                    </option>
+                                    <option value="Nữ" {{ old('gioitinh') == 'Nữ' ? 'selected' : '' }}>Nữ (Female)
+                                    </option>
+                                    <option value="Khác" {{ old('gioitinh') == 'Khác' ? 'selected' : '' }}>Khác (Other)
+                                    </option>
+                                </select>
                             </div>
                         </div>
 

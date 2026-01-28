@@ -8,7 +8,6 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
-    //
     public function login(Request $request)
     {
         $email = $request->input('email');
@@ -30,19 +29,26 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $name = $request->input('name');
-        $email = $request->input('email');
-        $password = $request->input('password');
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:8|confirmed',
+            'mssv' => 'nullable|string|max:20',
+            'lopmonhoc' => 'nullable|string|max:100',
+            'gioitinh' => 'nullable|string|in:Nam,Nữ,Khác',
+        ]);
 
-        $user = User::where('email', $email)->first();
-        if ($user) {
-            return redirect()->back()->with('error', 'User already exists');
+        if ($request->input('password') !== $request->input('password_confirmation')) {
+            return redirect()->back()->with('error', 'Passwords do not match')->withInput();
         }
 
         $user = User::create([
-            'name' => $name,
-            'email' => $email,
-            'password' => Hash::make($password),
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => Hash::make($request->input('password')),
+            'mssv' => $request->input('mssv'),
+            'lopmonhoc' => $request->input('lopmonhoc'),
+            'gioitinh' => $request->input('gioitinh'),
         ]);
 
         return redirect()->route('auth.login')->with('success', 'Register successful');
