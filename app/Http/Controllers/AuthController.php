@@ -13,18 +13,11 @@ class AuthController extends Controller
         $email = $request->input('email');
         $password = $request->input('password');
 
-        $user = User::where('email', $email)->first();
-        if (!$user) {
-            return redirect()->back()->with('error', 'User not found');
+        if (Auth::attempt(['email' => $email, 'password' => $password])) {
+            return redirect()->route('admin.product.list')->with('success', 'Login successful');
         }
 
-        if (!Hash::check($password, $user->password)) {
-            return redirect()->back()->with('error', 'Invalid password');
-        }
-
-        Auth::login($user);
-
-        return redirect()->route('home')->with('success', 'Login successful');
+        return redirect()->back()->with('error', 'Invalid email or password');
     }
 
     public function register(Request $request)
@@ -38,10 +31,6 @@ class AuthController extends Controller
             'gioitinh' => 'nullable|string|in:Nam,Nữ,Khác',
         ]);
 
-        if ($request->input('password') !== $request->input('password_confirmation')) {
-            return redirect()->back()->with('error', 'Passwords do not match')->withInput();
-        }
-
         $user = User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
@@ -51,12 +40,17 @@ class AuthController extends Controller
             'gioitinh' => $request->input('gioitinh'),
         ]);
 
-        return redirect()->route('auth.login')->with('success', 'Register successful');
+        if ($user) {
+            return redirect()->route('admin.auth.login')->with('success', 'Register successful');
+        }
+
+        return redirect()->route('admin.auth.register')->with('error', 'Register failed');
+
     }
 
     public function logout()
     {
         Auth::logout();
-        return redirect()->route('home')->with('success', 'Logout successful');
+        return redirect()->route('admin.auth.login')->with('success', 'Logout successful');
     }
 }

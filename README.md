@@ -1,59 +1,343 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel Product Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A Laravel-based product management system with AdminLTE dashboard, user authentication, and comprehensive product CRUD operations.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- 🔐 User Authentication (Login/Register)
+- 📦 Product Management (Create, Read, Update, Delete)
+- 👥 User Management
+- 🎨 AdminLTE Admin Dashboard
+- 📱 Responsive Bootstrap UI
+- 🔄 Database Migrations & Seeders
+- ✨ Custom Error Pages (404)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Requirements
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Before you begin, ensure you have the following installed on your system:
 
-## Learning Laravel
+- **PHP** >= 8.2
+- **Composer** (Latest version)
+- **Node.js** >= 18.x and **npm** >= 9.x
+- **Database**: MySQL, MariaDB, PostgreSQL, or SQLite
+- **Web Server**: Apache or Nginx (or use Laravel's built-in server)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## Installation
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Follow these steps to get your development environment running:
 
-## Laravel Sponsors
+### 1. Clone the Repository
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+git clone <repository-url>
+cd my-app
+```
 
-### Premium Partners
+### 2. Install PHP Dependencies
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+```bash
+composer install
+```
+
+### 3. Install Node Dependencies
+
+```bash
+npm install
+```
+
+### 4. Environment Configuration
+
+Copy the `.env.example` file to create your environment configuration:
+
+```bash
+# Windows (PowerShell)
+copy .env.example .env
+
+# Linux/Mac
+cp .env.example .env
+```
+
+### 5. Generate Application Key
+
+```bash
+php artisan key:generate
+```
+
+### 6. Configure Database
+
+Open the `.env` file and configure your database settings:
+
+#### Option A: Using SQLite (Recommended for Quick Start)
+
+```env
+DB_CONNECTION=sqlite
+# DB_DATABASE will default to database/database.sqlite
+```
+
+Create the SQLite database file:
+
+```bash
+# Windows (PowerShell)
+New-Item -Path database\database.sqlite -ItemType File
+
+# Linux/Mac
+touch database/database.sqlite
+```
+
+#### Option B: Using MySQL/MariaDB
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your_database_name
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
+
+Make sure to create the database first:
+
+```sql
+CREATE DATABASE your_database_name;
+```
+
+### 7. Run Database Migrations
+
+Run migrations to create all necessary tables:
+
+```bash
+php artisan migrate
+```
+
+### 8. Seed Database (Optional)
+
+If you want to populate the database with sample data:
+
+```bash
+php artisan db:seed
+```
+
+### 9. Publish AdminLTE Assets
+
+Publish the AdminLTE vendor assets:
+
+```bash
+php artisan vendor:publish --provider="JeroenNoten\LaravelAdminLte\AdminLteServiceProvider" --tag=assets
+```
+
+### 10. Build Frontend Assets
+
+Compile the CSS and JavaScript:
+
+```bash
+npm run build
+```
+
+## Running the Application
+
+### Option 1: Quick Start (Recommended for Development)
+
+Run all services concurrently (server, queue, and vite):
+
+```bash
+composer dev
+```
+
+This will start:
+- Laravel development server at `http://localhost:8000`
+- Queue worker
+- Vite development server
+
+### Option 2: Manual Start
+
+#### Start the Development Server
+
+```bash
+php artisan serve
+```
+
+The application will be available at `http://localhost:8000`
+
+#### Watch Frontend Assets (Optional - For Development)
+
+In a separate terminal:
+
+```bash
+npm run dev
+```
+
+#### Run Queue Worker (Optional - If using queues)
+
+In a separate terminal:
+
+```bash
+php artisan queue:work
+```
+
+## Quick Setup (All-in-One Command)
+
+For a fresh installation, you can use the setup script:
+
+```bash
+composer setup
+```
+
+This will:
+- Install all Composer dependencies
+- Create `.env` file from `.env.example`
+- Generate application key
+- Run database migrations
+- Install npm dependencies
+- Build frontend assets
+
+## Default Routes
+
+After installation, you can access:
+
+- **Home Page**: `http://localhost:8000/`
+- **Admin Login**: `http://localhost:8000/admin/login`
+- **Admin Register**: `http://localhost:8000/admin/register`
+- **Products List**: `http://localhost:8000/products`
+- **Admin Dashboard**: `http://localhost:8000/admin` (requires authentication)
+
+## Database Structure
+
+The application includes the following main tables:
+
+- `users` - User accounts with authentication
+- `products` - Product information with stock management
+- `cache` - Application cache storage
+- `jobs` - Queue job management
+- `sessions` - User session data
+
+## Testing
+
+Run the test suite:
+
+```bash
+composer test
+```
+
+Or use PHPUnit directly:
+
+```bash
+php artisan test
+```
+
+## Common Issues & Troubleshooting
+
+### Issue: "No application encryption key has been specified"
+
+**Solution**: Run `php artisan key:generate`
+
+### Issue: Database connection errors
+
+**Solution**: 
+- Check your `.env` database credentials
+- Ensure your database server is running
+- Verify the database exists
+
+### Issue: Permission errors on storage/logs
+
+**Solution**: Grant write permissions
+
+```bash
+# Linux/Mac
+chmod -R 775 storage bootstrap/cache
+
+# Or
+sudo chown -R www-data:www-data storage bootstrap/cache
+```
+
+### Issue: AdminLTE assets not loading
+
+**Solution**: Republish AdminLTE assets
+
+```bash
+php artisan vendor:publish --provider="JeroenNoten\LaravelAdminLte\AdminLteServiceProvider" --tag=assets --force
+```
+
+### Issue: Vite manifest not found
+
+**Solution**: Build the assets
+
+```bash
+npm run build
+```
+
+## Additional Commands
+
+### Clear Application Cache
+
+```bash
+php artisan cache:clear
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
+```
+
+### Optimize Application (Production)
+
+```bash
+php artisan optimize
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+```
+
+### Create New Admin User (via Tinker)
+
+```bash
+php artisan tinker
+```
+
+Then run:
+
+```php
+$user = new App\Models\User();
+$user->name = 'Admin User';
+$user->email = 'admin@example.com';
+$user->password = bcrypt('password');
+$user->save();
+```
+
+## Tech Stack
+
+- **Backend**: Laravel 12.x
+- **Frontend**: Vite, Bootstrap 5
+- **Admin Template**: AdminLTE 3.x
+- **Database**: MySQL/SQLite/PostgreSQL
+- **Authentication**: Laravel Breeze/Custom
+
+## Project Structure
+
+```
+my-app/
+├── app/
+│   ├── Http/Controllers/     # Application controllers
+│   ├── Models/               # Eloquent models
+│   └── Middleware/           # Custom middleware
+├── database/
+│   ├── migrations/           # Database migrations
+│   ├── seeders/              # Database seeders
+│   └── factories/            # Model factories
+├── public/                   # Public assets
+├── resources/
+│   ├── views/                # Blade templates
+│   ├── css/                  # CSS files
+│   └── js/                   # JavaScript files
+├── routes/                   # Application routes
+└── storage/                  # Application storage
+```
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Support
+
+If you encounter any issues or have questions, please open an issue in the repository.

@@ -1,5 +1,6 @@
 <x-layout>
-    <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-red-50 to-orange-50">
+    <div
+        class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-red-50 to-orange-50">
         <div class="max-w-md w-full">
             <!-- Access Denied Card -->
             <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
@@ -23,7 +24,8 @@
                             Restricted Area
                         </h2>
                         <p class="text-slate-600 leading-relaxed">
-                            You must be at least <span class="font-bold text-red-600">18 years old</span> to access this content.
+                            You must be at least <span class="font-bold text-red-600">18 years old</span> to access this
+                            content.
                         </p>
                         <p class="text-slate-500 mt-2 text-sm">
                             Please verify your age to continue.
@@ -33,14 +35,16 @@
                     <!-- Information Box -->
                     <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
                         <div class="flex">
-                            <svg class="w-5 h-5 text-red-600 mr-3 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-5 h-5 text-red-600 mr-3 flex-shrink-0 mt-0.5" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                             <div>
                                 <p class="text-sm text-red-800 font-medium mb-1">Age Verification Required</p>
                                 <p class="text-sm text-red-700">
-                                    This page contains content that requires age verification. If you believe this is an error, please contact support.
+                                    This page contains content that requires age verification. If you believe this is an
+                                    error, please contact support.
                                 </p>
                             </div>
                         </div>
@@ -72,11 +76,10 @@
             <!-- Additional Info -->
             <div class="mt-6 text-center">
                 <p class="text-sm text-slate-600">
-                    Need help? 
+                    Need help?
                     <a href="#" class="text-red-600 hover:text-red-700 font-medium">Contact Support</a>
                 </p>
             </div>
         </div>
     </div>
 </x-layout>
-

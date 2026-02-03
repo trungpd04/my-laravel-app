@@ -8,6 +8,7 @@ use App\Http\Controllers\AgeController;
 require __DIR__ . '/auth.php';
 require __DIR__ . '/product.php';
 require __DIR__ . '/error.php';
+require __DIR__ . '/admin.php';
 
 Route::get('/', function () {
     return view('home');
