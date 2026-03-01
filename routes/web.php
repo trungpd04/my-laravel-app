@@ -1,12 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AgeController;
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/product.php';
+require __DIR__ . '/category.php';
 require __DIR__ . '/error.php';
 require __DIR__ . '/admin.php';
 

@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
-
+use App\Helpers\ImageHelper;
+use App\Helpers\ValidateHelper;
 
 class ProductController extends Controller
 {
@@ -12,13 +13,7 @@ class ProductController extends Controller
     public function createProduct(Request $request)
     {
         // Validate the request
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|numeric|min:0',
-            'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'category_id' => 'nullable|integer',
-        ]);
+        ValidateHelper::validateProduct($request);
 
         $product = new Product();
         $product->name = $request->name;
@@ -26,17 +21,7 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->category_id = $request->category_id;
 
-        // Handle image upload
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName();
-
-            // Store image in storage/app/private/product-images
-            $image->move(storage_path('app/private/product-images'), $imageName);
-
-            // Save the image URL path to database
-            $product->image = '/product/image/' . $imageName;
-        }
+        $product->image = ImageHelper::uploadImage($request, 'product-images');
 
         $product->save();
 
@@ -75,13 +60,7 @@ class ProductController extends Controller
         }
 
         // Validate the request
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|numeric|min:0',
-            'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'category_id' => 'nullable|integer',
-        ]);
+        ValidateHelper::validateProduct($request, $id);
 
         $product->name = $request->name;
         $product->price = $request->price;
@@ -92,21 +71,10 @@ class ProductController extends Controller
         if ($request->hasFile('image')) {
             // Delete old image if exists
             if ($product->image) {
-                $oldImagePath = str_replace('/product/image/', '', $product->image);
-                $oldImageFullPath = storage_path('app/private/product-images/' . $oldImagePath);
-                if (file_exists($oldImageFullPath)) {
-                    unlink($oldImageFullPath);
-                }
+                ImageHelper::deleteImage('product-images', $product->image);
             }
 
-            $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName();
-
-            // Store image in storage/app/private/product-images
-            $image->move(storage_path('app/private/product-images'), $imageName);
-
-            // Save the image URL path to database
-            $product->image = '/product/image/' . $imageName;
+            $product->image = ImageHelper::uploadImage($request, 'product-images');
         }
 
         $product->save();
@@ -116,12 +84,7 @@ class ProductController extends Controller
 
     public function getProductImage($filename)
     {
-        $path = storage_path('app/private/product-images/' . $filename);
-
-        if (!file_exists($path)) {
-            abort(404);
-        }
-
-        return response()->file($path);
+        return ImageHelper::getImage('product-images', $filename);
     }
+
 }

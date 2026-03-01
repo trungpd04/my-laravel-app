@@ -50,8 +50,13 @@
                                     </td>
                                     <td class="align-middle">
                                         @if($product->image)
-                                            <img src="{{ $product->image }}" alt="{{ $product->name }}" loading="lazy"
-                                                class="rounded shadow-sm" style="width: 64px; height: 64px; object-fit: cover;">
+                                            @php
+                                                // Extract filename from path (e.g., /product-images/filename.jpg -> filename.jpg)
+                                                $filename = basename($product->image);
+                                            @endphp
+                                            <img src="{{ route('admin.product.image', $filename) }}" alt="{{ $product->name }}"
+                                                loading="lazy" class="rounded shadow-sm"
+                                                style="width: 64px; height: 64px; object-fit: cover;">
                                         @else
                                             <div class="d-flex align-items-center justify-content-center rounded bg-light"
                                                 style="width: 64px; height: 64px;">
