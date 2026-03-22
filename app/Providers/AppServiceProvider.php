@@ -29,5 +29,18 @@ class AppServiceProvider extends ServiceProvider
             $loggedInUser = Auth::user();
             $view->with('loggedInUser', $loggedInUser);
         });
+
+        // Share recursive category tree with customer layout navbar.
+        // with('allChildren') triggers the self-referencing relation chain,
+        // loading all descendants in depth-first order without N+1 queries.
+        Facades\View::composer('layout.customer.layout', function (View $view) {
+            $navCategories = \App\Models\Category::whereNull('parent_id')
+                ->where('is_active', 1)
+                ->where('is_deleted', 0)
+                ->with('allChildren')
+                ->orderBy('name')
+                ->get();
+            $view->with('navCategories', $navCategories);
+        });
     }
 }

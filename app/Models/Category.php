@@ -21,6 +21,29 @@ class Category extends Model
         'is_deleted',
     ];
 
+    public function parent()
+    {
+        return $this->belongsTo(Category::class, 'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(Category::class, 'parent_id')
+                    ->where('is_active', 1)
+                    ->where('is_deleted', 0)
+                    ->orderBy('name');
+    }
+
+    /**
+     * Recursively loads all descendant categories in a single eager-loaded tree.
+     * Usage: Category::with('allChildren')->get()
+     * Each level's children are already resolved — no extra queries per node.
+     */
+    public function allChildren()
+    {
+        return $this->children()->with('allChildren');
+    }
+
     public static function existParent($parent_id)
     {
         return Category::where('parent_id', $parent_id)->exists();
